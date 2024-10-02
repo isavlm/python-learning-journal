@@ -1,5 +1,4 @@
 def collectDailyWorkHours():
-    """Collects daily work hours for up to 5 days and ensures valid input."""
     print("Gathering daily hours worked, please input 0 if there wasn't any work done that day.")
     myHours = []
     for i in range(5):
@@ -16,12 +15,12 @@ def collectDailyWorkHours():
     return myHours
 
 def calculateTotalHours(listOfHours):
-    """Calculates the total number of hours worked."""
-    myTotalHours = sum(listOfHours)
+    myTotalHours = 0
+    for i in listOfHours:
+        myTotalHours += int(i)
     return myTotalHours
 
 def calculateOverTime(hours):
-    """Calculates overtime hours if applicable."""
     myOverTime = 0
     if hours > 40:
         print("Calculating overtime hours...")
@@ -30,17 +29,14 @@ def calculateOverTime(hours):
     return myOverTime
 
 def calculateOverTimePay(hourlyRate):
-    """Calculates overtime pay at 1.5 times the hourly rate."""
     return hourlyRate * 1.5
 
-def writeResults(hourlyRate, totalHours, overTimePay):
-    """Writes payroll results to a file."""
-    with open("payRate.txt", "w") as myFile:
-        myFile.write(f"At an hourly rate of {hourlyRate}, the {totalHours} hours worked includes {overTimePay} in overtime pay.")
-    print("Payroll information saved to 'payRate.txt'.")
+def writeResults(hourlyRate,totalHours,overTimePay):
+    myFile = open("payRate.txt","w")
+    myFile.write(f"at an hourly rate of {hourlyRate} the {totalHours} worked includes {overTimePay} in overtime pay")
+    myFile.close()
 
 def myMainFunction():
-    """Main function to run the payroll program."""
     while True:
         try:
             myHourlyRate = float(input("Please input the hourly rate of the employee: "))
@@ -60,7 +56,7 @@ def myMainFunction():
 
     # Calculate pay
     if myOvertimeHours > 0:
-        myOvertimePayRate = calculateOverTimePay(myHourlyRate)
+        myOvertimePayRate = calculateOverTimePay(int(myHourlyRate))
         myOvertimePay = myOvertimeHours * myOvertimePayRate
         myRegularPay = myHourlyRate * 40
         myFinalPay = myOvertimePay + myRegularPay
